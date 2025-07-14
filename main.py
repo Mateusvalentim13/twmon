@@ -91,7 +91,7 @@ if tela == "Tela de diagnóstico":
         "🔋 Status das Baterias",
         "❄️ Dados Congelados",
         "⏰ Continuidade Temporal",
-        "📦 Qualidade do Sinal",
+        "📶 Qualidade do Sinal",
         "📄 Relatórios"
     ])
 
