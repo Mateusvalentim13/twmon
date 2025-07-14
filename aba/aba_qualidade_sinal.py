@@ -22,11 +22,10 @@ def exibir(dfs_por_arquivo):
     }
 
     for nome_arquivo, resultado in sinal_processado.items():
-        st.subheader(f"📄 {nome_arquivo}")
-        
         if resultado is None:
-            
-            continue
+            continue  # Arquivo sem colunas de sinal: não exibe nada
+
+        st.markdown(f"### 📄 Arquivo: `{nome_arquivo}`")
 
         df_sinal, colunas_falhas = resultado
 
@@ -65,16 +64,11 @@ def processar_sinal(df):
     # Tratar valores inválidos
     df_sinal = df_sinal.applymap(lambda x: pd.NA if str(x).strip().lower() in ['none', '-999'] else x)
 
-    # Remover colunas sem nenhuma falha
+    # Identificar colunas com falha (valores > 75)
     colunas_com_falha = [
         col for col in df_sinal.columns
         if pd.to_numeric(df_sinal[col], errors='coerce').gt(75).any()
     ]
-
-    if not colunas_com_falha:
-        return None
-
-    df_sinal = df_sinal[colunas_com_falha].copy()
 
     # Adicionar timestamp (se existir)
     for ts_col in ['timestamp', 'TIMESTAMP', 'TS']:
