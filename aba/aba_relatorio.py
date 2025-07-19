@@ -31,8 +31,12 @@ def contar_registros(dados, titulo):
         return 0
     if isinstance(dados, tuple):
         if titulo == "Status da Bateria":
-            return int(sum(dados[0]["Leituras < 3.3V"] > 0))
-        if titulo == "Disponibilidade":
+            df_bateria = dados[0]
+    if isinstance(df_bateria, pd.DataFrame) and "Leituras < 3.3V" in df_bateria.columns:
+        return int(sum(df_bateria["Leituras < 3.3V"] > 0))
+    return 0
+
+    if titulo == "Disponibilidade":
             return len(dados[1])
     elif isinstance(dados, pd.DataFrame):
         return len(dados)
